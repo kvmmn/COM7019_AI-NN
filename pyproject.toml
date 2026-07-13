@@ -1,0 +1,52 @@
+[project]
+name = "com7019-stock-forecast"
+version = "0.2.0"
+description = "COM7019 MSc assignment: LSTM vs GRU vs CNN-LSTM stock price forecasting with reproducible pipeline."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Kaveh Momeni", email = "25199053@student.arden.ac.uk" }]
+keywords = ["lstm", "gru", "stock-forecasting", "deep-learning", "time-series"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "matplotlib>=3.7",
+    "mplfinance>=0.12",
+    "seaborn>=0.13",
+    "tensorflow>=2.15",
+    "scikit-learn>=1.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel>=6.29",
+    "jupyter>=1.0",
+    "ruff>=0.4",
+]
+
+[project.scripts]
+com7019-train = "com7019.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/com7019"]
+
+[tool.uv]
+dev-dependencies = [
+    "ipykernel>=6.29",
+    "jupyter>=1.0",
+    "ruff>=0.4",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

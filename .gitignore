@@ -1,5 +1,36 @@
-.DS_Store
-*.ipynb_checkpoints/
+# Python
 __pycache__/
-~$*
-*.docx
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+*_checkpoints/
+
+# ML outputs — PNG/CSV committed after Colab run; skip large Plotly HTML
+_code/output/**/*.html
+_code/outputs/
+_code/outputs_student/
+/output/
+_code/screenshots/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# UV
+.uv/
+
+# Large local copies (data stays in repo root for assignment)
+# Uncomment if you prefer not to track the CSV in git:
+# Stock_Price_Data_[3921].csv
