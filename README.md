@@ -81,6 +81,6 @@ MIT — academic assignment code. Dataset © assessment brief; do not redistribu
 
 ## Changelog
 
-- **v0.3** — Full Colab re-run (13 Jul 2026): `output/` folder, candlestick EDA fix, all-model comparison (4a–4e), log/zoom charts, 1M primary window.
+- **v0.3** — Full Colab re-run (13 Jul 2026): `output/` folder, candlestick EDA, all-model comparison (4a–4e), log/zoom charts, 1M primary window. Docs and ledger frozen. Repo: https://github.com/kvmmn/COM7019_AI-NN
 - **v0.2** — Tutor feedback (Jul 2026): GitHub packaging, candlestick EDA, 1W/1M/1Y windows, descriptive model names, comparison plots, business reflection in report.
 - **v0.1** — Initial Colab run with LSTM/GRU/hybrid comparison.
