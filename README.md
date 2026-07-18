@@ -3,7 +3,7 @@
 **Arden University** · MSc Data Science · Module **COM7019** (Artificial Intelligence and Neural Networks)  
 **Student ID:** 25199053
 
-Public code and results for the COM7019 portfolio. The written report is submitted separately; this repository is the runnable evidence behind it.
+Public code, frozen results, and the submitted portfolio PDF for COM7019.
 
 ---
 
@@ -48,6 +48,7 @@ Full table: [`results/tables/results_all_runs.csv`](results/tables/results_all_r
 ## Repository layout
 
 ```text
+report/      Submitted portfolio PDF
 data/        Authorised dataset from the brief
 notebook/    Main Colab/Jupyter notebook (run this)
 results/     Frozen figures, tables, and model summaries
@@ -55,7 +56,8 @@ src/         Small helper package used by the notebook
 docs/        Short methodology note
 ```
 
-Main notebook: [`notebook/COM7019_25199053.ipynb`](notebook/COM7019_25199053.ipynb)
+- Submitted report: [`report/COM7019_Portfolio_25199053.pdf`](report/COM7019_Portfolio_25199053.pdf)
+- Main notebook: [`notebook/COM7019_25199053.ipynb`](notebook/COM7019_25199053.ipynb)
 
 ---
 

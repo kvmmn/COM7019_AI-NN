@@ -26,7 +26,8 @@ results/**/*.html
 *.swp
 ~$*
 
-# Assessment materials — do not publish
+# Assessment materials — do not publish (except the submitted report PDF)
 *.pdf
+!report/*.pdf
 _brain/
 tmp/
