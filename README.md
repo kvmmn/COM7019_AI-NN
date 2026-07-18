@@ -1,36 +1,71 @@
-# COM7019 — Stock Price Forecasting
+# COM7019 — Stock price forecasting with neural networks
 
-MSc assignment (Arden University): compare **LSTM**, **GRU**, and a **CNN-LSTM** hybrid for one-step-ahead stock price prediction on historical OHLCV data.
+**Arden University** · MSc Data Science · Module **COM7019** (Artificial Intelligence and Neural Networks)  
+**Student ID:** 25199053
 
-Student ID: `25199053`
+Public code and results for the COM7019 portfolio. The written report is submitted separately; this repository is the runnable evidence behind it.
 
-## Highlights
+---
 
-- Chronological train/validation/test split (no leakage)
-- Persistence baseline before any neural model
-- Dropout, early stopping, and fine-tuning experiments
-- Trading-day windows: 1W (5), 1M (21), 1Y (252)
-- Frozen metrics and figures from a full GPU run
+## What this project is
 
-**Headline result:** CNN-LSTM best test RMSE **3.2277** vs persistence baseline **3.2380**. Among the required architectures, **GRU** matches LSTM accuracy at lower parameter cost.
+The brief asked for a deep-learning investigation of short-term stock forecasting on one authorised historical dataset (`Stock_Price_Data_[3921].csv`).
+
+In plain terms:
+
+1. Can yesterday’s prices help predict tomorrow’s Adjusted Close?
+2. Between the two required models, **LSTM** and **GRU**, which is more suitable here?
+3. Do sensible experiments (depth, dropout, lookback window, learning rate, fine-tuning) change that answer?
+4. As an extra check, does a simple **CNN-LSTM hybrid** beat the recurrent baselines under the same rules?
+
+---
+
+## What was done
+
+- Loaded and checked the authorised CSV (no missing values, chronological order).
+- Split the series by time (70% train / 15% validation / 15% test) so the future never leaks into training.
+- Built sliding windows with per-window normalisation, then scored every model against a **persistence baseline** (tomorrow = today).
+- Trained LSTM and GRU variants, plus a CNN-LSTM hybrid, with early stopping.
+- Ran ablations: dropout on/off, lookback **1W / 1M / 1Y** trading days, lower learning rate, and hybrid fine-tuning.
+- Froze metrics, architecture diagrams, and comparison charts into `results/` from a full Colab run.
+
+---
+
+## Headline results (frozen Colab run)
+
+| Model | Test RMSE |
+|-------|----------:|
+| CNN-LSTM hybrid | **3.2277** |
+| Best GRU (LR = 0.0001) | 3.2339 |
+| Persistence baseline | 3.2380 |
+
+**Takeaway:** the hybrid is slightly best; gains over persistence are small. Among the required architectures, **GRU** is the practical choice: almost the same accuracy as LSTM, with fewer parameters and less training time.
+
+Full table: [`results/tables/results_all_runs.csv`](results/tables/results_all_runs.csv)
+
+---
 
 ## Repository layout
 
 ```text
-data/          Authorised dataset (brief [3921])
-notebook/      Assignment notebook (run this)
-results/       Figures, tables, and model summaries
-src/com7019/   Small reusable helpers (config, data, evaluation)
-docs/          Short methodology note
+data/        Authorised dataset from the brief
+notebook/    Main Colab/Jupyter notebook (run this)
+results/     Frozen figures, tables, and model summaries
+src/         Small helper package used by the notebook
+docs/        Short methodology note
 ```
 
-## Quick start
+Main notebook: [`notebook/COM7019_25199053.ipynb`](notebook/COM7019_25199053.ipynb)
+
+---
+
+## How to reproduce
 
 ### Google Colab (recommended)
 
 1. Upload `notebook/COM7019_25199053.ipynb` and `data/Stock_Price_Data_[3921].csv`.
-2. Runtime → Run all.
-3. Download the generated `output/` folder if you need local copies.
+2. Runtime → **Run all**.
+3. Optional: download any new `output/` folder if you regenerate local copies.
 
 ### Local
 
@@ -39,30 +74,14 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 pip install -e .
-
-# Place the CSV next to the notebook (matches Colab path)
 cp data/Stock_Price_Data_[3921].csv notebook/
 jupyter notebook notebook/COM7019_25199053.ipynb
 ```
 
-Full training is slow on CPU; use Colab with GPU when possible.
+Full training is slow on CPU; Colab with GPU is easier.
 
-### Docker
-
-```bash
-docker compose run notebook
-```
-
-## Results
-
-See `results/tables/results_all_runs.csv` and `results/figures/`.
-
-| Model | Test RMSE |
-|-------|----------:|
-| CNN-LSTM hybrid | 3.2277 |
-| GRU (LR=1e-4) | 3.2339 |
-| Persistence baseline | 3.2380 |
+---
 
 ## Licence
 
-MIT for the code in this repository. The CSV is provided for the COM7019 assessment; keep academic-use context in mind if you reuse it.
+MIT for the code in this repository. The CSV is supplied for the COM7019 assessment; keep academic-use context in mind if you reuse it.
