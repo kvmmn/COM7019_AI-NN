@@ -1,7 +1,6 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.egg-info/
 .eggs/
 dist/
@@ -13,24 +12,21 @@ venv/
 
 # Jupyter
 .ipynb_checkpoints/
-*_checkpoints/
 
-# ML outputs — PNG/CSV committed after Colab run; skip large Plotly HTML
-_code/output/**/*.html
-_code/outputs/
-_code/outputs_student/
-/output/
-_code/screenshots/
+# Generated run folders (committed portfolio results live in results/)
+notebook/output/
+notebook/Stock_Price_Data_[3921].csv
+output/
+results/**/*.html
 
 # OS / IDE
 .DS_Store
 .idea/
 .vscode/
 *.swp
+~$*
 
-# UV
-.uv/
-
-# Large local copies (data stays in repo root for assignment)
-# Uncomment if you prefer not to track the CSV in git:
-# Stock_Price_Data_[3921].csv
+# Assessment materials — do not publish
+*.pdf
+_brain/
+tmp/

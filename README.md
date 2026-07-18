@@ -1,86 +1,68 @@
-# COM7019 — Stock Price Forecasting (LSTM / GRU / CNN-LSTM)
+# COM7019 — Stock Price Forecasting
 
-**Student ID:** 25199053 · **Module:** COM7019 Artificial Intelligence and Neural Networks
+MSc assignment (Arden University): compare **LSTM**, **GRU**, and a **CNN-LSTM** hybrid for one-step-ahead stock price prediction on historical OHLCV data.
 
-Reproducible MSc assignment project comparing recurrent neural networks on historical stock OHLCV data. Includes a professional Python package, Docker/UV setup, and a Colab-ready Jupyter notebook.
+Student ID: `25199053`
 
-## What this repo contains
+## Highlights
 
-| Path | Purpose |
-|------|---------|
-| `_code/COM7019_25199053.ipynb` | Main assignment notebook (Task 1 evidence) |
-| `src/com7019/` | Reusable Python package (data, config, evaluation, plots) |
-| `_brain/` | Report draft, results ledger, rubric evidence (working files) |
-| `Stock_Price_Data_[3921].csv` | Authorised dataset (brief [3921]) |
+- Chronological train/validation/test split (no leakage)
+- Persistence baseline before any neural model
+- Dropout, early stopping, and fine-tuning experiments
+- Trading-day windows: 1W (5), 1M (21), 1Y (252)
+- Frozen metrics and figures from a full GPU run
 
-## Quick start (local, UV)
+**Headline result:** CNN-LSTM best test RMSE **3.2277** vs persistence baseline **3.2380**. Among the required architectures, **GRU** matches LSTM accuracy at lower parameter cost.
 
-```bash
-# Install UV: https://docs.astral.sh/uv/
-cd "COM7019 - Assignment"
-uv sync
-source .venv/bin/activate   # or: uv run ...
+## Repository layout
 
-# Run notebook locally (CPU; full training is slow — prefer Colab)
-jupyter notebook _code/COM7019_25199053.ipynb
+```text
+data/          Authorised dataset (brief [3921])
+notebook/      Assignment notebook (run this)
+results/       Figures, tables, and model summaries
+src/com7019/   Small reusable helpers (config, data, evaluation)
+docs/          Short methodology note
 ```
 
-## Quick start (Google Colab — recommended for GPU)
+## Quick start
 
-1. Upload `COM7019_25199053.ipynb` and `Stock_Price_Data_[3921].csv` to Colab.
-2. Run all cells. Outputs save to `output/` (inside `_code/` when the notebook lives there).
-3. Download `output/` and the executed notebook for the report appendix.
+### Google Colab (recommended)
 
-## Docker
+1. Upload `notebook/COM7019_25199053.ipynb` and `data/Stock_Price_Data_[3921].csv`.
+2. Runtime → Run all.
+3. Download the generated `output/` folder if you need local copies.
 
-```bash
-docker compose build
-docker compose run notebook   # executes notebook headlessly (CPU, slow)
-docker compose run shell      # interactive dev shell
-```
-
-## Trading-day windows (finance standard)
-
-Windows use **trading days**, not calendar days:
-
-| Label | Trading days | Typical use |
-|-------|-------------|-------------|
-| 1W | 5 | Short-term momentum |
-| 1M | 21 | ~one trading month (primary experiments) |
-| 1Y | 252 | ~one trading year (annual context) |
-
-Primary model comparison uses **1M (21 days)**. Window ablation compares all three.
-
-## Model naming convention
-
-Names encode every setting, e.g.:
-
-`GRU_1Layer_64Units_NoDropout_Window1Month_21TradingDays`
-
-Readable without opening the code.
-
-## Outputs
-
-After a full run, `output/` contains:
-
-- `figures/` — EDA candlesticks, architecture diagrams, loss curves, comparison charts (4a–4e)
-- `tables/results_all_runs.csv` — frozen metrics for the report
-- `tables/results_comparison_enriched.csv` — Δ baseline, business efficiency columns
-- `models/model_summaries.txt` — architecture evidence
-
-## Development
+### Local
 
 ```bash
-uv run ruff check src/
-python scripts/patch_notebook_viz_v2.py   # apply viz patches (do not use upgrade_notebook.py)
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+
+# Place the CSV next to the notebook (matches Colab path)
+cp data/Stock_Price_Data_[3921].csv notebook/
+jupyter notebook notebook/COM7019_25199053.ipynb
 ```
+
+Full training is slow on CPU; use Colab with GPU when possible.
+
+### Docker
+
+```bash
+docker compose run notebook
+```
+
+## Results
+
+See `results/tables/results_all_runs.csv` and `results/figures/`.
+
+| Model | Test RMSE |
+|-------|----------:|
+| CNN-LSTM hybrid | 3.2277 |
+| GRU (LR=1e-4) | 3.2339 |
+| Persistence baseline | 3.2380 |
 
 ## Licence
 
-MIT — academic assignment code. Dataset © assessment brief; do not redistribute outside submission context.
-
-## Changelog
-
-- **v0.3** — Full Colab re-run (13 Jul 2026): `output/` folder, candlestick EDA, all-model comparison (4a–4e), log/zoom charts, 1M primary window. Docs and ledger frozen. Repo: https://github.com/kvmmn/COM7019_AI-NN
-- **v0.2** — Tutor feedback (Jul 2026): GitHub packaging, candlestick EDA, 1W/1M/1Y windows, descriptive model names, comparison plots, business reflection in report.
-- **v0.1** — Initial Colab run with LSTM/GRU/hybrid comparison.
+MIT for the code in this repository. The CSV is provided for the COM7019 assessment; keep academic-use context in mind if you reuse it.

@@ -2,17 +2,9 @@ services:
   notebook:
     build: .
     volumes:
-      - ./_code/outputs:/app/outputs
-      - ./Stock_Price_Data_[3921].csv:/app/data/Stock_Price_Data_[3921].csv:ro
+      - ./output:/app/output
     environment:
       - TF_CPP_MIN_LOG_LEVEL=2
-    command: >
-      jupyter nbconvert
-      --to notebook
-      --execute
-      /app/notebooks/COM7019_25199053.ipynb
-      --output /app/outputs/COM7019_25199053_executed.ipynb
-      --ExecutePreprocessor.timeout=7200
 
   shell:
     build: .

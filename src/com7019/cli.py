@@ -1,4 +1,4 @@
-"""Optional CLI entry point for headless notebook execution."""
+"""CLI helper pointing to the assignment notebook."""
 
 from __future__ import annotations
 
@@ -11,12 +11,12 @@ def main() -> None:
     parser.add_argument(
         "--notebook",
         type=Path,
-        default=Path("_code/COM7019_25199053.ipynb"),
+        default=Path("notebook/COM7019_25199053.ipynb"),
         help="Path to the assignment notebook",
     )
     args = parser.parse_args()
     print(f"Open and run: {args.notebook}")
-    print("For full training, use Google Colab (GPU) or: docker compose run notebook")
+    print("For full GPU training, use Google Colab or: docker compose run notebook")
 
 
 if __name__ == "__main__":

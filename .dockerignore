@@ -3,8 +3,7 @@
 __pycache__
 *.pyc
 .DS_Store
-_code/outputs
-_code/archive
-_code/screenshots
-_brain
-*.ipynb_checkpoints
+docs
+results
+*.md
+!README.md
