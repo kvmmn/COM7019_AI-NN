@@ -45,6 +45,70 @@ Full table: [`results/tables/results_all_runs.csv`](results/tables/results_all_r
 
 ---
 
+## Key figures (guide)
+
+All frozen images live in [`results/figures/`](results/figures/). Below is a short tour of the main ones.
+
+### Data and split
+
+**Candlestick (last 60 days)** — recent price action with moving averages; useful for a business view of short-term path and volatility.
+
+![Candlestick last 60 trading days](results/figures/eda_candlestick_last60days.png)
+
+**March 2020 zoom** — the test window includes a real crash regime, not only calm growth.
+
+![Candlestick March 2020 zoom](results/figures/eda_candlestick_mar2020_zoom.png)
+
+**Train / validation / test on Adjusted Close** — chronological 70/15/15 split so future days never leak into training.
+
+![Price history with train validation test split](results/figures/fig06_price_history.png)
+
+### Model architectures
+
+**One-layer LSTM** — required recurrent baseline (64 units, dropout 0.2, 21-day window).
+
+![One-layer LSTM architecture](results/figures/arch_LSTM_1Layer_64Units_Dropout0p2_Win1Month_21d.png)
+
+**One-layer GRU** — same protocol, fewer parameters than the matching LSTM.
+
+![One-layer GRU architecture](results/figures/arch_GRU_1Layer_64Units_Dropout0p2_Win1Month_21d.png)
+
+**CNN-LSTM hybrid** — optional extension: Conv1D front-end, then LSTM.
+
+![CNN-LSTM hybrid architecture](results/figures/arch_Hybrid_CNN32_LSTM64_Dropout0p2_Win1Month_21d.png)
+
+### Experiments and comparison
+
+**Window ablation** — 1M (21 trading days) beat 1W and 1Y on test RMSE for the no-dropout GRU.
+
+![Window ablation test RMSE](results/figures/fig19_window_ablation.png)
+
+**Loss curves (log scale)** — training and validation MSE for the main LSTM, GRU, and hybrid runs.
+
+![Loss curves log scale](results/figures/fig24_loss_curves_log.png)
+
+**Zoomed accuracy** — test RMSE, MAE and MAPE by model; green bars beat persistence, red bars do not.
+
+![Zoomed accuracy metrics](results/figures/fig26_accuracy_zoomed.png)
+
+**Delta versus baseline** — change in test RMSE relative to persistence (negative is better).
+
+![Delta RMSE versus baseline](results/figures/fig27_delta_vs_baseline.png)
+
+**Rank heatmap** — multi-criteria ranks across accuracy and cost.
+
+![Multi-criteria rank heatmap](results/figures/fig30_rank_heatmap.png)
+
+### Predictions
+
+**Predicted vs actual (final test year)** — curves look close, but forecasts largely lag by about one day (refined persistence).
+
+![Predictions versus actual Adjusted Close](results/figures/fig32_predictions_vs_actual.png)
+
+More figures in the same folder: October 2019–April 2020 candlestick, two-layer LSTM/GRU diagrams, linear loss curves, training-time/parameter cost, and business-efficiency plots.
+
+---
+
 ## Repository layout
 
 ```text
